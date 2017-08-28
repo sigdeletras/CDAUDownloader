@@ -45,6 +45,11 @@ Se ha incluído la posibilidad de aplicar una simbología básica a las capas *V
 
 ![Opción simbología de capas](/img/cdau_simbologia_qgis.png)
 
+<figure>
+    <img src="/img/cdau_simbologia_qgis.png" alt="This is the figure caption"  title="This is where the title goes" style="width="50%";">
+    <figcaption>This is the figure caption</figcaption>
+</figure>
+
 ## Modelo de datos
 
 Toda la información sobre el modelo de datos puede consultarse en el apartado [Proyecto](http://www.callejerodeandalucia.es/portal/web/cdau/origen) de la web del CDAU.
