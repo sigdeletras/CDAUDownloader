@@ -43,6 +43,8 @@ Se ha incluído la posibilidad de aplicar una simbología básica a las capas *V
 
 * Capa **Portal/PK**: Visibilidad de la capa capa a partir de la escala 1:3000, simbología puntal y etiquetado por número (campo *"num_por_desde"*)
 
+![Opción simbología de capas](/img/cdau_simbologia_qgis.png)
+
 ## Modelo de datos
 
 Toda la información sobre el modelo de datos puede consultarse en el apartado [Proyecto](http://www.callejerodeandalucia.es/portal/web/cdau/origen) de la web del CDAU.
