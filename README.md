@@ -4,7 +4,7 @@ Complemento de QGIS para la descarga capas del **Callejero Digital de Andalucía
 
 *QGIS plugin for the download the layers of Callejero Digital de Andalucía Unificado (Spain). The download is performed through the WFS service of the Spatial Data Infrastructure of Andalusia (Spain). (<a href='http://www.callejerodeandalucia.es/portal/web/cdau/'>More information about the CDAU project.</a>)*
 
-Para más información puede consultarse la entrada en [SIGdeletras.com](http://www.sigdeletras.com/2017/plugin-de-qgis-para-descarga-de-datos-catastrales-inspire)
+Para más información puede consultarse la entrada en [SIGdeletras.com](http://www.sigdeletras.com/2017/blog/cdau-downloader-plugin-de-qgis-para-la-descarga-del-callejero-de-andalucia/)
 
 ## Instalar plugin
 
