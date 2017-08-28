@@ -45,7 +45,7 @@ Se ha incluído la posibilidad de aplicar una simbología básica a las capas *V
 
 <figure>
     <img src="/img/cdau_simbologia_qgis.png" alt="Opción simbología de capas"  title="Opción simbología de capas" style="width="50%";">
-    <figcaption>Comparativa de capas con o sin simbología. Roquetas de Mar (Almería). Base PNOA</figcaption>
+    <figcaption>Comparativa de carga de capas con o sin simbología. Roquetas de Mar (Almería). Base PNOA</figcaption>
 </figure>
 
 ## Modelo de datos
