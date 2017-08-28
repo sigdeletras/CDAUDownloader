@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="es_ES">
+<context>
+    <name>CDAUDownloader</name>
+    <message>
+        <location filename="../cdau_downloader.py" line="192"/>
+        <source>&amp;CDAU Downloader</source>
+        <translation>Descarga &amp;Callejero CDAU</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader.py" line="179"/>
+        <source>CDAU Downloader</source>
+        <translation>Descarga Callejero CDAU</translation>
+    </message>
+</context>
+<context>
+    <name>CDAUDownloaderDialogBase</name>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="14"/>
+        <source>CDAU Downloader</source>
+        <translation>Descarga Callejero CDAU</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="45"/>
+        <source>Roads</source>
+        <translation>Vial</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="52"/>
+        <source>Sections</source>
+        <translation>Tramo</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="59"/>
+        <source>Addresses and Kilometers</source>
+        <translation>Portalero y PK</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="75"/>
+        <source>Province</source>
+        <translation>Provincia</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="118"/>
+        <source>Download folder</source>
+        <translation>Carpeta de descarga</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="131"/>
+        <source>Add layers to the QGIS project</source>
+        <translation>Añadir capas a proyecto QGIS</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="144"/>
+        <source>Municipality</source>
+        <translation>Municipio</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="157"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="170"/>
+        <source>Apply QGIS styles</source>
+        <translation>Aplicar estilos (Vial y Portalero/PK)</translation>
+    </message>
+    <message>
+        <location filename="../cdau_downloader_dialog_base.ui" line="183"/>
+        <source>Run</source>
+        <translation>Ejecutar</translation>
+    </message>
+</context>
+</TS>

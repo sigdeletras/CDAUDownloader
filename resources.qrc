@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/plugins/CDAUDownloader" >
+        <file>cdau_icon.png</file>
+    </qresource>
+</RCC>
+
+
