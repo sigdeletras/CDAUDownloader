@@ -11,12 +11,11 @@ name=CDAU Downloader
 qgisMinimumVersion=2.14
 qgisMaximumVersion=3.99
 description=Descarga de capas del Callejero Digital de Andalucía Unificado (España)
-version=1.0
+version=0.2
 author=Patricio Soriano :: SIGdeletras.com
 email=pasoriano@sigdeletras.com
 
 about=<p>Complemento de QGIS para la descarga capas del Callejero Digital de Andalucía Unificado (España). La descarga se realiza mediante el servicio WFS de la Infraestructura de datos Espaciales de Andalucía (España). <a href='http://www.callejerodeandalucia.es/portal/web/cdau/'>Más información sobre el proyecto CDAU. </a></p><p>QGIS plugin for the download the layers of Callejero Digital de Andalucía Unificado (Spain). The download is performed through the WFS service of the Spatial Data Infrastructure of Andalusia (Spain). <a href='http://www.callejerodeandalucia.es/portal/web/cdau/'>More information about the CDAU project.</a></p>
-
 tracker=https://github.com/sigdeletras/CDAUDownloader/
 repository=https://github.com/sigdeletras/CDAUDownloader/
 # End of mandatory metadata
@@ -24,10 +23,9 @@ repository=https://github.com/sigdeletras/CDAUDownloader/
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-# changelog=
-	** General **
-28.07.2016 V1.0.0:
-	- QGIS3 Migration
+changelog=
+	28.07.2016 V0.2: Migration for QGIS3. QGIS 2.99 compatible, Python 3, QT5
+	26.07.2016 V0.1: Primera versión
 
 # Tags are comma separated with spaces allowed
 tags=Vector, WFS, CDAU, Callejero, Portalero, Andalucía, España, Andalusia, Spain, Street, Road, Addresses
