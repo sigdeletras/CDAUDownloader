@@ -1,4 +1,4 @@
-# CDAU Downloader (V1.0.0) <img src="cdau_icon.png" height="42" width="42">
+# CDAU Downloader (V0.2) <img src="cdau_icon.png" height="42" width="42">
 
 Complemento de QGIS para la descarga capas del **Callejero Digital de Andalucía Unificado -  CDAU** (España). La descarga se reliza mediante el servicio WFS de la Infraestructura de datos Espaciales de Andalucía (España). (<a href='http://www.callejerodeandalucia.es/portal/web/cdau/'>Más información sobre el proyecto CDAU. </a>)
 
@@ -56,4 +56,5 @@ Toda la información sobre el modelo de datos puede consultarse en el apartado [
 
 ## Changelog
 
-- 28.07.2016 V1.0.0: Cambios para QGIS3
+- 28.07.2016 V0.2: Cambios para QGIS3
+- 26.07.2016 V0.1: Primera versión
