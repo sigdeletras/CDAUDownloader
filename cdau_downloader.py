@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """
 /***************************************************************************
  CDAUDownloader
@@ -22,6 +23,9 @@
 """
 import urllib.request
 import zipfile
+import urllib
+from urllib import request, parse
+import sys
 
 # Import the PyQt and QGIS libraries
 from qgis.PyQt.QtCore import Qt
@@ -168,6 +172,7 @@ class CDAUDownloader:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = CDAUDownloaderDialog()
+        self.dlg.setWindowFlags(Qt.WindowSystemMenuHint | Qt.WindowTitleHint) 
 
         icon = QIcon(icon_path)
         action = QAction(icon, text, parent)
@@ -240,6 +245,21 @@ class CDAUDownloader:
         codprov = ine_municipio[0:2]
         codmuni = ine_municipio[0:5]
     
+    #Progress Download
+    def reporthook(self,blocknum, blocksize, totalsize):
+        readsofar = blocknum * blocksize
+        if totalsize > 0:
+            percent = readsofar * 1e2 / totalsize
+            self.dlg.progressBar.setValue(int(percent))
+
+    #Encode URL Download
+    def EncodeUrl(self,url):
+        url = parse.urlsplit(url)
+        url = list(url)
+        url[2] = parse.quote(url[2])
+        encoded_link = parse.urlunsplit(url)
+        return encoded_link            
+
     def download(self):
         """Dowload data funtion"""
 
@@ -249,6 +269,7 @@ class CDAUDownloader:
 
         else:
 
+            QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
             ine_municipio = self.dlg.comboBox_municipality.currentText()
             codprov = ine_municipio[0:2]
             codmuni = ine_municipio[0:5]
@@ -332,12 +353,19 @@ class CDAUDownloader:
             if self.dlg.checkBox_styles.isChecked():
                 if QT_VERSION == 5:
 
-                    layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-                    layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+                    layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                    layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
                 else:
-                    layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-                    layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+
+                    if sys.platform == 'linux2' or sys.platform == 'darwin':
+                        layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                        layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
+
+                    else:
+                        layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
+                        layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+
 
                 qmlPortalpk_path = os.path.dirname(__file__) + "/qml/portalpk.qml"
                 layerPortalpk.loadNamedStyle(qmlPortalpk_path)
@@ -360,6 +388,8 @@ class CDAUDownloader:
             #     layerPortalpk.loadNamedStyle(qmlPortalpk_path)
             #     layerPortalpk.triggerRepaint()
 
+        QApplication.restoreOverrideCursor()
+        
     def run(self):
         """Run method that performs all the real work"""
 
