@@ -60,6 +60,8 @@ from .listamuni import *
 from qgis.core import QgsProject
 from qgis.gui import QgsMessageBar
 
+platform = sys.platform
+
 listProvincias = LISTPROV
 listMunicipios = LISTMUNI
 
@@ -352,19 +354,22 @@ class CDAUDownloader:
 
             if self.dlg.checkBox_styles.isChecked():
                 if QT_VERSION == 5:
-
-                    layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
-                    layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
+                        if platform == 'win32':
+                            layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
+                            layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+                        else: 
+                            layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                            layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
                 else:
 
-                    if sys.platform == 'linux2' or sys.platform == 'darwin':
-                        layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
-                        layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
-
-                    else:
+                    if platform == 'win32':
                         layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
                         layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+
+                    else:
+                        layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                        layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
 
                 qmlPortalpk_path = os.path.dirname(__file__) + "/qml/portalpk.qml"
