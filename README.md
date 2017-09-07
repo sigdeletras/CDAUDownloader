@@ -54,7 +54,13 @@ Se ha incluído la posibilidad de **añadir simbología básica a las capas** *V
 
 Toda la información sobre el modelo de datos puede consultarse en el apartado [Proyecto](http://www.callejerodeandalucia.es/portal/web/cdau/origen) de la web del CDAU.
 
-## Changelog
+## Mejoras
+
+- Selección de formado de descarga según las capacidades del servicio WFS
+- Opción para conversión de sistema de referencia a EPGS:25830
+- Vínculo de información catastral por atributo
+
+## Registro de cambios
 
 - 07.09.2017 V0.3: Barra de progreso. Mejora en la interfaz e iconos.
 - 28.07.2017 V0.2: Migration for QGIS3. QGIS 2.99 compatible, Python 3, QT5
