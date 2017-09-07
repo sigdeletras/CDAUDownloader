@@ -271,129 +271,125 @@ class CDAUDownloader:
 
         else:
 
-            QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
-            ine_municipio = self.dlg.comboBox_municipality.currentText()
-            codprov = ine_municipio[0:2]
-            codmuni = ine_municipio[0:5]
-            zippath = self.dlg.lineEdit_path.text()
+            try:
 
-            wd = os.path.join(zippath , ine_municipio)
+                QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+                ine_municipio = self.dlg.comboBox_municipality.currentText()
+                codprov = ine_municipio[0:2]
+                codmuni = ine_municipio[0:5]
+                zippath = self.dlg.lineEdit_path.text()
 
-            geojson_file = "cdau_%s_vial.geojson" % (ine_municipio)
-            cdau_geojson= os.path.join(wd , geojson_file ) 
+                wd = os.path.join(zippath , ine_municipio)
 
-            # pass
-
-            # download Vial
-            if self.dlg.checkBox_vial.isChecked():
-
-                url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_vial&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
-                # descagar Vial
-         
-                try:
-                    os.makedirs(wd)
-                except OSError:
-                    pass
-
-                geojson_file = "%s_cdau_vial.geojson" % (ine_municipio)
+                geojson_file = "cdau_%s_vial.geojson" % (ine_municipio)
                 cdau_geojson= os.path.join(wd , geojson_file ) 
-               
-                # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
-                urllib.request.urlretrieve(url, cdau_geojson)
 
-            # download Tramos
-            if self.dlg.checkBox_tramos.isChecked():
+                # pass
 
-                url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_tramo&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
-                # descagar Vial
-         
-                try:
-                    os.makedirs(wd)
-                except OSError:
-                    pass
+                # download Vial
+                if self.dlg.checkBox_vial.isChecked():
 
-                geojson_file = "%s_cdau_tramo.geojson" % (ine_municipio)
-                cdau_geojson= os.path.join(wd , geojson_file ) 
-               
-                # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
-                urllib.request.urlretrieve(url, cdau_geojson)
+                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_vial&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
+                    # descagar Vial
+             
+                    try:
+                        os.makedirs(wd)
+                    except OSError:
+                        pass
 
-            # download potalpk
-            if self.dlg.checkBox_portalpk.isChecked():
+                    geojson_file = "%s_cdau_vial.geojson" % (ine_municipio)
+                    cdau_geojson= os.path.join(wd , geojson_file ) 
+                   
+                    # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
+                    urllib.request.urlretrieve(url, cdau_geojson)
 
-                url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_portalpk&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
-                # descagar Vial
-         
-                try:
-                    os.makedirs(wd)
-                except OSError:
-                    pass
+                # download Tramos
+                if self.dlg.checkBox_tramos.isChecked():
 
-                geojson_file = "%s_cdau_portalpk.geojson" % (ine_municipio)
-                cdau_geojson= os.path.join(wd , geojson_file ) 
-               
-                # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
-                urllib.request.urlretrieve(url, cdau_geojson)
+                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_tramo&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
+                    # descagar Vial
+             
+                    try:
+                        os.makedirs(wd)
+                    except OSError:
+                        pass
+
+                    geojson_file = "%s_cdau_tramo.geojson" % (ine_municipio)
+                    cdau_geojson= os.path.join(wd , geojson_file ) 
+                   
+                    # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
+                    urllib.request.urlretrieve(url, cdau_geojson)
+
+                # download potalpk
+                if self.dlg.checkBox_portalpk.isChecked():
+
+                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_portalpk&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
+                    # descagar Vial
+             
+                    try:
+                        os.makedirs(wd)
+                    except OSError:
+                        pass
+
+                    geojson_file = "%s_cdau_portalpk.geojson" % (ine_municipio)
+                    cdau_geojson= os.path.join(wd , geojson_file ) 
+                   
+                    # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
+                    urllib.request.urlretrieve(url, cdau_geojson)
 
 
-            # self.msgBar.pushMessage("Ok!" , level=QgsMessageBar.SUCCESS, duration=3)
+                # self.msgBar.pushMessage("Ok!" , level=QgsMessageBar.SUCCESS, duration=3)
 
-            # Carga en proyecto si se marca la opcion
+                # Carga en proyecto si se marca la opcion
 
-            if self.dlg.checkBox_vial.isChecked() or self.dlg.checkBox_tramos.isChecked() or self.dlg.checkBox_portalpk.isChecked():
+                if self.dlg.checkBox_vial.isChecked() or self.dlg.checkBox_tramos.isChecked() or self.dlg.checkBox_portalpk.isChecked():
 
-                #self.msgBar.pushMessage("Start loading GeoJSON files..." , level=QgsMessageBar.INFO)
+                    #self.msgBar.pushMessage("Start loading GeoJSON files..." , level=QgsMessageBar.INFO)
 
-                ## loading geojson
-                for geojsonfile in os.listdir(wd):
-                    if geojsonfile.endswith('.geojson'):
-                        layer = self.iface.addVectorLayer(os.path.join(wd , geojsonfile) , "" ,
-                                                          "ogr")
-            else:
-                self.msgBar.pushMessage("Seleccione al menos una capa para descargar." , level=QgsMessageBar.INFO, duration=3)
-
-            if self.dlg.checkBox_styles.isChecked():
-                if QT_VERSION == 5:
-                        if platform == 'win32':
-                            layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-                            layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
-                        else: 
-                            layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
-                            layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
-
+                    ## loading geojson
+                    for geojsonfile in os.listdir(wd):
+                        if geojsonfile.endswith('.geojson'):
+                            layer = self.iface.addVectorLayer(os.path.join(wd , geojsonfile) , "" ,
+                                                              "ogr")
                 else:
+                    self.msgBar.pushMessage("Seleccione al menos una capa para descargar." , level=QgsMessageBar.INFO, duration=3)
 
-                    if platform == 'win32':
-                        layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-                        layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+                if self.dlg.checkBox_styles.isChecked():
+                    if QT_VERSION == 5:
+                            if platform == 'win32':
+                                layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
+                                layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+                            else: 
+                                layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                                layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
                     else:
-                        layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
-                        layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
+
+                        if platform == 'win32':
+                            layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
+                            layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+
+                        else:
+                            layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                            layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
 
-                qmlPortalpk_path = os.path.dirname(__file__) + "/qml/portalpk.qml"
-                layerPortalpk.loadNamedStyle(qmlPortalpk_path)
-                layerPortalpk.triggerRepaint()
+                    qmlPortalpk_path = os.path.dirname(__file__) + "/qml/portalpk.qml"
+                    layerPortalpk.loadNamedStyle(qmlPortalpk_path)
+                    layerPortalpk.triggerRepaint()
 
+                    
+                    qmlVial_path = os.path.dirname(__file__) + "/qml/vial.qml"
+                    layerVial.loadNamedStyle( qmlVial_path )
+                    layerVial.triggerRepaint()
+
+                QApplication.restoreOverrideCursor()
+
+            except Exception as e:
+                QApplication.restoreOverrideCursor()
+                self.msgBar.pushMessage("Failed! "+ str(e) , level=QgsMessageBar.WARNING, duration=3)
+                return
                 
-                qmlVial_path = os.path.dirname(__file__) + "/qml/vial.qml"
-                layerVial.loadNamedStyle( qmlVial_path )
-                layerVial.triggerRepaint()
-
-            # if self.dlg.checkBox_styles.isChecked():
-            #     # layerVial = QgsProject.mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
-            #     layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
-            #     qmlVial_path = os.path.dirname(__file__) + "/qml/vial.qml"
-            #     layerVial.loadNamedStyle( qmlVial_path )
-            #     layerVial.triggerRepaint()
-
-            #     layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-            #     qmlPortalpk_path = os.path.dirname(__file__) + "/qml/portalpk.qml"
-            #     layerPortalpk.loadNamedStyle(qmlPortalpk_path)
-            #     layerPortalpk.triggerRepaint()
-
-        QApplication.restoreOverrideCursor()
         
     def run(self):
         """Run method that performs all the real work"""
