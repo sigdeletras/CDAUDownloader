@@ -232,7 +232,7 @@ class CDAUDownloader:
 
     def not_data(self):
         """Message for fields without information"""
-        self.msgBar.pushMessage('Completar datos de municipio o indicar la ruta de descarga' , level=QgsMessageBar.INFO)
+        self.msgBar.pushMessage('Completar datos de municipio o indicar la ruta de descarga' , level=QgsMessageBar.INFO, duration=3)
 
     def filter_municipality(self , index):
         """Message for fields without information"""
@@ -336,13 +336,13 @@ class CDAUDownloader:
                 urllib.request.urlretrieve(url, cdau_geojson)
 
 
-            self.msgBar.pushMessage("Ok!" , level=QgsMessageBar.SUCCESS)
+            # self.msgBar.pushMessage("Ok!" , level=QgsMessageBar.SUCCESS, duration=3)
 
             # Carga en proyecto si se marca la opcion
 
             if self.dlg.checkBox_vial.isChecked() or self.dlg.checkBox_tramos.isChecked() or self.dlg.checkBox_portalpk.isChecked():
 
-                self.msgBar.pushMessage("Start loading GeoJSON files..." , level=QgsMessageBar.INFO)
+                #self.msgBar.pushMessage("Start loading GeoJSON files..." , level=QgsMessageBar.INFO)
 
                 ## loading geojson
                 for geojsonfile in os.listdir(wd):
@@ -350,7 +350,7 @@ class CDAUDownloader:
                         layer = self.iface.addVectorLayer(os.path.join(wd , geojsonfile) , "" ,
                                                           "ogr")
             else:
-                self.msgBar.pushMessage("Seleccione al menos una capa para descargar." , level=QgsMessageBar.INFO)
+                self.msgBar.pushMessage("Seleccione al menos una capa para descargar." , level=QgsMessageBar.INFO, duration=3)
 
             if self.dlg.checkBox_styles.isChecked():
                 if QT_VERSION == 5:
