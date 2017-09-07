@@ -301,7 +301,15 @@ class CDAUDownloader:
                     cdau_geojson= os.path.join(wd , geojson_file ) 
                    
                     # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
-                    urllib.request.urlretrieve(url, cdau_geojson)
+                    # urllib.request.urlretrieve(url, cdau_geojson)
+                    
+                    e_url=self.EncodeUrl(url)
+                    try:
+                        urllib.request.urlretrieve(e_url , cdau_geojson, self.reporthook)
+                    except:
+                        shutil.rmtree(wd)
+                        raise
+
 
                 # download Tramos
                 if self.dlg.checkBox_tramos.isChecked():
@@ -318,7 +326,14 @@ class CDAUDownloader:
                     cdau_geojson= os.path.join(wd , geojson_file ) 
                    
                     # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
-                    urllib.request.urlretrieve(url, cdau_geojson)
+                    # urllib.request.urlretrieve(url, cdau_geojson)
+                    
+                    e_url=self.EncodeUrl(url)
+                    try:
+                        urllib.request.urlretrieve(e_url , cdau_geojson, self.reporthook)
+                    except:
+                        shutil.rmtree(wd)
+                        raise
 
                 # download potalpk
                 if self.dlg.checkBox_portalpk.isChecked():
@@ -335,11 +350,18 @@ class CDAUDownloader:
                     cdau_geojson= os.path.join(wd , geojson_file ) 
                    
                     # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
-                    urllib.request.urlretrieve(url, cdau_geojson)
-
+                    # urllib.request.urlretrieve(url, cdau_geojson)
+                    
+                    e_url=self.EncodeUrl(url)
+                    try:
+                        urllib.request.urlretrieve(e_url , cdau_geojson, self.reporthook)
+                    except:
+                        shutil.rmtree(wd)
+                        raise
 
                 # self.msgBar.pushMessage("Ok!" , level=QgsMessageBar.SUCCESS, duration=3)
-
+                self.dlg.progressBar.setValue(100)#No llega al 100% aunque lo descargue,es random
+                QApplication.restoreOverrideCursor()
                 # Carga en proyecto si se marca la opcion
 
                 if self.dlg.checkBox_vial.isChecked() or self.dlg.checkBox_tramos.isChecked() or self.dlg.checkBox_portalpk.isChecked():
@@ -407,6 +429,9 @@ class CDAUDownloader:
         self.dlg.checkBox_styles.setChecked(0)
 
         # show the dialog
+        self.dlg.progressBar.setValue(0)
+        self.dlg.setWindowIcon(QIcon (':/plugins/CDAUDownloader/icon.png')); 
+
         self.dlg.show()
 
         # Run the dialog event loop

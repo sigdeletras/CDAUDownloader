@@ -44,6 +44,8 @@ import os.path
 from qgis.core import *
 from qgis.gui import *
 
+from .resources import *
+
 # from PyQt4 import QtGui, uic
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
