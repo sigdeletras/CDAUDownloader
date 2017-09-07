@@ -32,13 +32,13 @@ try:
     from PyQt5.QtGui import *
     from PyQt5.QtWidgets import *
     from PyQt5 import uic
-    QT_VERSION=5
+    QT_VERSION = 5
     os.environ['QT_API'] = 'pyqt5'
 except:
     from PyQt4.QtCore import *
     from PyQt4.QtGui import *
     from PyQt4 import uic
-    QT_VERSION=4
+    QT_VERSION = 4
     
 import os.path
 from qgis.core import *
