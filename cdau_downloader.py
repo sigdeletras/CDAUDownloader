@@ -24,21 +24,23 @@
 import urllib.request
 import zipfile
 import urllib
-from urllib import request, parse
+from urllib import request , parse
 import sys
 
 # Import the PyQt and QGIS libraries
 from qgis.PyQt.QtCore import Qt
-#from PyQt5 import QtCore, QtGui, QtWidgets
+# from PyQt5 import QtCore, QtGui, QtWidgets
 import os
-#from PyQt5.QtWidgets import QDialog
- 
+
+# from PyQt5.QtWidgets import QDialog
+
 try:
     from qgis.core import Qgis
     from PyQt5.QtCore import *
     from PyQt5.QtGui import *
     from PyQt5.QtWidgets import *
     from PyQt5 import uic
+
     QT_VERSION = 5
     os.environ['QT_API'] = 'pyqt5'
 except:
@@ -46,12 +48,13 @@ except:
     from PyQt4.QtGui import *
     from PyQt4 import uic
     from qgis.core import QgsMapLayerRegistry
+
     QT_VERSION = 4
-    
+
 import os.path
 from qgis.core import *
 
-#import resources
+# import resources
 from .resources import *
 
 # from Spanish_Inspire_Catastral_Downloader_dialog import Spanish_Inspire_Catastral_DownloaderDialog
@@ -68,10 +71,11 @@ listMunicipios = LISTMUNI
 codprov = ''
 codmuni = ''
 
+
 class CDAUDownloader:
     """QGIS Plugin Implementation."""
 
-    def __init__(self, iface):
+    def __init__(self , iface):
         """Constructor.
 
         :param iface: An interface instance that will be passed to this class
@@ -87,8 +91,8 @@ class CDAUDownloader:
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
-            self.plugin_dir,
-            'i18n',
+            self.plugin_dir ,
+            'i18n' ,
             'CDAUDownloader_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
@@ -98,7 +102,6 @@ class CDAUDownloader:
             if qVersion() > '4.3.3':
                 QCoreApplication.installTranslator(self.translator)
 
-
         # Declare instance attributes
         self.actions = []
         self.menu = self.tr(u'&CDAU Downloader')
@@ -107,7 +110,7 @@ class CDAUDownloader:
         self.toolbar.setObjectName(u'CDAUDownloader')
 
     # noinspection PyMethodMayBeStatic
-    def tr(self, message):
+    def tr(self , message):
         """Get the translation for a string using Qt translation API.
 
         We implement this ourselves since we do not inherit QObject.
@@ -119,20 +122,19 @@ class CDAUDownloader:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('CDAUDownloader', message)
-
+        return QCoreApplication.translate('CDAUDownloader' , message)
 
     def add_action(
-        self,
-        icon_path,
-        text,
-        callback,
-        enabled_flag=True,
-        add_to_menu=True,
-        add_to_toolbar=True,
-        status_tip=None,
-        whats_this=None,
-        parent=None):
+            self ,
+            icon_path ,
+            text ,
+            callback ,
+            enabled_flag=True ,
+            add_to_menu=True ,
+            add_to_toolbar=True ,
+            status_tip=None ,
+            whats_this=None ,
+            parent=None):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -174,10 +176,10 @@ class CDAUDownloader:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = CDAUDownloaderDialog()
-        self.dlg.setWindowFlags(Qt.WindowSystemMenuHint | Qt.WindowTitleHint) 
+        self.dlg.setWindowFlags(Qt.WindowSystemMenuHint | Qt.WindowTitleHint)
 
         icon = QIcon(icon_path)
-        action = QAction(icon, text, parent)
+        action = QAction(icon , text , parent)
         action.triggered.connect(callback)
         action.setEnabled(enabled_flag)
 
@@ -192,7 +194,7 @@ class CDAUDownloader:
 
         if add_to_menu:
             self.iface.addPluginToMenu(
-                self.menu,
+                self.menu ,
                 action)
 
         self.actions.append(action)
@@ -204,20 +206,19 @@ class CDAUDownloader:
 
         icon_path = ':/plugins/CDAUDownloader/icon.png'
         self.add_action(
-            icon_path,
-            text=self.tr(u'CDAU Downloader'),
-            callback=self.run,
+            icon_path ,
+            text=self.tr(u'CDAU Downloader') ,
+            callback=self.run ,
             parent=self.iface.mainWindow())
 
         self.dlg.pushButton_select_path.clicked.connect(self.select_output_folder)
         self.dlg.pushButton_run.clicked.connect(self.download)
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&CDAU Downloader'),
+                self.tr(u'&CDAU Downloader') ,
                 action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
@@ -232,7 +233,8 @@ class CDAUDownloader:
 
     def not_data(self):
         """Message for fields without information"""
-        self.msgBar.pushMessage('Completar datos de municipio o indicar la ruta de descarga' , level=QgsMessageBar.INFO, duration=3)
+        self.msgBar.pushMessage('Completar datos de municipio o indicar la ruta de descarga' ,
+                                level=QgsMessageBar.INFO , duration=3)
 
     def filter_municipality(self , index):
         """Message for fields without information"""
@@ -246,21 +248,21 @@ class CDAUDownloader:
 
         codprov = ine_municipio[0:2]
         codmuni = ine_municipio[0:5]
-    
-    #Progress Download
-    def reporthook(self,blocknum, blocksize, totalsize):
+
+    # Progress Download
+    def reporthook(self , blocknum , blocksize , totalsize):
         readsofar = blocknum * blocksize
         if totalsize > 0:
             percent = readsofar * 1e2 / totalsize
             self.dlg.progressBar.setValue(int(percent))
 
-    #Encode URL Download
-    def EncodeUrl(self,url):
+    # Encode URL Download
+    def EncodeUrl(self , url):
         url = parse.urlsplit(url)
         url = list(url)
         url[2] = parse.quote(url[2])
         encoded_link = parse.urlunsplit(url)
-        return encoded_link            
+        return encoded_link
 
     def download(self):
         """Dowload data funtion"""
@@ -282,55 +284,56 @@ class CDAUDownloader:
                 wd = os.path.join(zippath , ine_municipio)
 
                 geojson_file = "cdau_%s_vial.geojson" % (ine_municipio)
-                cdau_geojson= os.path.join(wd , geojson_file ) 
+                cdau_geojson = os.path.join(wd , geojson_file)
 
                 # pass
 
                 # download Vial
                 if self.dlg.checkBox_vial.isChecked():
 
-                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_vial&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
+                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_vial&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (
+                        codmuni)
                     # descagar Vial
-             
+
                     try:
                         os.makedirs(wd)
                     except OSError:
                         pass
 
                     geojson_file = "%s_cdau_vial.geojson" % (ine_municipio)
-                    cdau_geojson= os.path.join(wd , geojson_file ) 
-                   
+                    cdau_geojson = os.path.join(wd , geojson_file)
+
                     # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
                     # urllib.request.urlretrieve(url, cdau_geojson)
-                    
-                    e_url=self.EncodeUrl(url)
+
+                    e_url = self.EncodeUrl(url)
                     try:
-                        urllib.request.urlretrieve(e_url , cdau_geojson, self.reporthook)
+                        urllib.request.urlretrieve(e_url , cdau_geojson , self.reporthook)
                     except:
                         shutil.rmtree(wd)
                         raise
 
-
                 # download Tramos
                 if self.dlg.checkBox_tramos.isChecked():
 
-                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_tramo&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
+                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_tramo&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (
+                        codmuni)
                     # descagar Vial
-             
+
                     try:
                         os.makedirs(wd)
                     except OSError:
                         pass
 
                     geojson_file = "%s_cdau_tramo.geojson" % (ine_municipio)
-                    cdau_geojson= os.path.join(wd , geojson_file ) 
-                   
+                    cdau_geojson = os.path.join(wd , geojson_file)
+
                     # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
                     # urllib.request.urlretrieve(url, cdau_geojson)
-                    
-                    e_url=self.EncodeUrl(url)
+
+                    e_url = self.EncodeUrl(url)
                     try:
-                        urllib.request.urlretrieve(e_url , cdau_geojson, self.reporthook)
+                        urllib.request.urlretrieve(e_url , cdau_geojson , self.reporthook)
                     except:
                         shutil.rmtree(wd)
                         raise
@@ -338,81 +341,88 @@ class CDAUDownloader:
                 # download potalpk
                 if self.dlg.checkBox_portalpk.isChecked():
 
-                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_portalpk&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (codmuni)
+                    url = u'http://www.callejerodeandalucia.es/servicios/cdau/wfs?srsname=EPSG:4258&typename=cdau:v_portalpk&version=1.0.0&request=GetFeature&service=WFS&PROPERTYNAME=*&cql_filter=ine_mun=\'%s\'&outputformat=application/json' % (
+                        codmuni)
                     # descagar Vial
-             
+
                     try:
                         os.makedirs(wd)
                     except OSError:
                         pass
 
                     geojson_file = "%s_cdau_portalpk.geojson" % (ine_municipio)
-                    cdau_geojson= os.path.join(wd , geojson_file ) 
-                   
+                    cdau_geojson = os.path.join(wd , geojson_file)
+
                     # urllib.request.urlretrieve(url.encode('utf-8') , cdau_geojson)
                     # urllib.request.urlretrieve(url, cdau_geojson)
-                    
-                    e_url=self.EncodeUrl(url)
+
+                    e_url = self.EncodeUrl(url)
                     try:
-                        urllib.request.urlretrieve(e_url , cdau_geojson, self.reporthook)
+                        urllib.request.urlretrieve(e_url , cdau_geojson , self.reporthook)
                     except:
                         shutil.rmtree(wd)
                         raise
 
                 # self.msgBar.pushMessage("Ok!" , level=QgsMessageBar.SUCCESS, duration=3)
-                self.dlg.progressBar.setValue(100)#No llega al 100% aunque lo descargue,es random
+                self.dlg.progressBar.setValue(100)  # No llega al 100% aunque lo descargue,es random
                 QApplication.restoreOverrideCursor()
                 # Carga en proyecto si se marca la opcion
 
                 if self.dlg.checkBox_vial.isChecked() or self.dlg.checkBox_tramos.isChecked() or self.dlg.checkBox_portalpk.isChecked():
 
-                    #self.msgBar.pushMessage("Start loading GeoJSON files..." , level=QgsMessageBar.INFO)
+                    # self.msgBar.pushMessage("Start loading GeoJSON files..." , level=QgsMessageBar.INFO)
 
-                    ## loading geojson
+                    # loading geojson
+
                     for geojsonfile in os.listdir(wd):
                         if geojsonfile.endswith('.geojson'):
                             layer = self.iface.addVectorLayer(os.path.join(wd , geojsonfile) , "" ,
                                                               "ogr")
                 else:
-                    self.msgBar.pushMessage("Seleccione al menos una capa para descargar." , level=QgsMessageBar.INFO, duration=3)
+                    self.msgBar.pushMessage("Seleccione al menos una capa para descargar." , level=QgsMessageBar.INFO ,
+                                            duration=3)
 
                 if self.dlg.checkBox_styles.isChecked():
                     if QT_VERSION == 5:
-                            if platform == 'win32':
-                                layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-                                layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
-                            else: 
-                                layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
-                                layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
+                        if platform == 'win32':
+                            layerPortalpk = QgsProject.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[
+                                0]
+                            layerVial = QgsProject.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+                        else:
+                            layerPortalpk = QgsProject.instance().mapLayersByName(
+                                '%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                            layerVial = QgsProject.instance().mapLayersByName(
+                                '%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
                     else:
 
                         if platform == 'win32':
-                            layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
-                            layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
+                            layerPortalpk = \
+                                QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk' % (ine_municipio))[0]
+                            layerVial = \
+                                QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial' % (ine_municipio))[0]
 
                         else:
-                            layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
-                            layerVial = QgsMapLayerRegistry.instance().mapLayersByName('%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
-
+                            layerPortalpk = QgsMapLayerRegistry.instance().mapLayersByName(
+                                '%s_cdau_portalpk OGRGeoJSON Point' % (ine_municipio))[0]
+                            layerVial = QgsMapLayerRegistry.instance().mapLayersByName(
+                                '%s_cdau_vial OGRGeoJSON MultiLineString' % (ine_municipio))[0]
 
                     qmlPortalpk_path = os.path.dirname(__file__) + "/qml/portalpk.qml"
                     layerPortalpk.loadNamedStyle(qmlPortalpk_path)
                     layerPortalpk.triggerRepaint()
 
-                    
                     qmlVial_path = os.path.dirname(__file__) + "/qml/vial.qml"
-                    layerVial.loadNamedStyle( qmlVial_path )
+                    layerVial.loadNamedStyle(qmlVial_path)
                     layerVial.triggerRepaint()
 
                 QApplication.restoreOverrideCursor()
 
             except Exception as e:
                 QApplication.restoreOverrideCursor()
-                self.msgBar.pushMessage("Failed! "+ str(e) , level=QgsMessageBar.WARNING, duration=3)
+                self.msgBar.pushMessage("Failed! " + str(e) , level=QgsMessageBar.WARNING , duration=3)
                 return
-                
-        
+
     def run(self):
         """Run method that performs all the real work"""
 
@@ -430,7 +440,7 @@ class CDAUDownloader:
 
         # show the dialog
         self.dlg.progressBar.setValue(0)
-        self.dlg.setWindowIcon(QIcon (':/plugins/CDAUDownloader/icon.png')); 
+        self.dlg.setWindowIcon(QIcon(':/plugins/CDAUDownloader/icon.png'));
 
         self.dlg.show()
 
@@ -440,4 +450,3 @@ class CDAUDownloader:
         # See if OK was pressed
         if result:
             pass
-
